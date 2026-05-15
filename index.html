@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⚠️ WARNING: INTERNAL ERROR | For Haroo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>⚠️ WARNING: SYSTEM COMPROMISED</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
@@ -17,16 +17,14 @@
         }
 
         body, html {
-            margin: 0; padding: 0;
-            width: 100%; height: 100%;
-            font-family: 'Poppins', sans-serif;
-            background: #000;
-            overflow: hidden;
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            font-family: 'Poppins', sans-serif; background: #000;
+            overflow: hidden; touch-action: manipulation;
         }
 
         #matrix-canvas {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 0; opacity: 0.4;
+            z-index: 0; opacity: 0.4; pointer-events: none;
         }
 
         .stage {
@@ -37,35 +35,31 @@
             padding: 20px; box-sizing: border-box; z-index: 2;
         }
 
-        .active { display: flex !important; animation: fadeIn 0.8s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .active { display: flex !important; animation: fadeIn 0.5s; }
 
         .btn-container { 
-            position: relative; margin-top: 30px; 
-            display: flex; gap: 30px; justify-content: center; 
-            align-items: center; width: 100%; height: 120px;
+            position: relative; margin-top: 20px; 
+            display: flex; gap: 15px; justify-content: center; 
+            align-items: center; width: 100%; min-height: 100px;
         }
         
         .btn {
-            padding: 12px 35px; border-radius: 50px; border: none;
+            padding: 12px 25px; border-radius: 50px; border: none;
             cursor: pointer; font-weight: 600; font-family: 'Poppins';
-            font-size: 1rem; min-width: 130px; z-index: 10;
-            transition: 0.3s;
+            font-size: 0.9rem; min-width: 100px; z-index: 10;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
-        .btn-main { background: var(--btn-grad); color: white; box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4); }
-        .btn-hacker { background: transparent; border: 2px solid var(--hacker-green); color: var(--hacker-green); text-transform: uppercase; }
+        .btn-main { background: var(--btn-grad); color: white; }
+        .btn-hacker { background: transparent; border: 2px solid var(--hacker-green); color: var(--hacker-green); }
 
-        .btn-no-loop {
-            position: absolute;
-            animation: moveLoop 3s linear infinite;
-        }
+        .btn-no-loop { position: absolute; animation: moveLoop 3s linear infinite; }
 
         @keyframes moveLoop {
             0% { transform: translate(0, 0); }
-            25% { transform: translate(140px, -90px); }
-            50% { transform: translate(-140px, 90px); }
-            75% { transform: translate(140px, 90px); }
+            25% { transform: translate(80px, -60px); }
+            50% { transform: translate(-80px, 60px); }
+            75% { transform: translate(80px, 60px); }
             100% { transform: translate(0, 0); }
         }
 
@@ -74,191 +68,173 @@
             color: #444; overflow-y: auto !important;
         }
 
-        .memory-storyboard {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            width: 95%; max-width: 1200px;
-            gap: 15px; margin-top: 20px;
-            padding: 20px;
-        }
-
-        .mem-col { display: flex; flex-direction: column; gap: 15px; }
+        .memory-part { display: none; width: 100%; max-width: 500px; flex-direction: column; gap: 10px; }
+        .memory-part.active-part { display: flex; animation: fadeInUp 0.5s; }
 
         .memory-item {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 18px; border-radius: 20px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            background: white; padding: 15px; border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             font-size: 0.85rem; border-left: 5px solid var(--romantic-pink);
-            text-align: left; opacity: 0; transform: translateY(20px);
-            transition: 0.6s all ease;
-            line-height: 1.5;
+            text-align: left; line-height: 1.4;
         }
-        .memory-item.show { opacity: 1; transform: translateY(0); }
 
         .heading-love { 
-            font-family: 'Dancing Script', cursive; font-size: 3.5rem; 
-            color: var(--romantic-pink); margin: 20px 0;
-            text-shadow: 2px 2px 0px #fff;
+            font-family: 'Dancing Script', cursive; font-size: 2.2rem; 
+            color: var(--romantic-pink); margin-bottom: 15px;
         }
 
         .sorry-box {
-            background: white;
-            padding: 30px;
-            border-radius: 25px;
-            max-width: 600px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border: 2px dashed var(--romantic-pink);
-        }
-
-        @media (max-width: 900px) {
-            .memory-storyboard { grid-template-columns: 1fr; }
-            .heading-love { font-size: 2.5rem; }
+            background: white; padding: 20px; border-radius: 20px;
+            max-width: 90%; font-size: 0.9rem; border: 2px dashed var(--romantic-pink);
+            text-align: left; line-height: 1.5;
         }
     </style>
 </head>
 <body>
 
     <canvas id="matrix-canvas"></canvas>
+
     <audio id="music-bday" loop src="https://www.soundjay.com/misc/sounds/birthday-song-1.mp3"></audio>
     <audio id="music-romantic" loop src="https://www.soundjay.com/nature/sounds/rain-01.mp3"></audio>
 
     <div id="stage-1" class="stage active">
-        <h1 class="animate__animated animate__flash animate__infinite" style="color: var(--hacker-red); font-size: 3rem;">⚠️ THREAT DETECTED</h1>
-        <p id="hacker-text" style="color: var(--hacker-green); font-family: 'Courier Prime'; font-size: 1.2rem;"></p>
+        <h1 class="animate__animated animate__flash animate__infinite" style="color: var(--hacker-red);">⚠️ THREAT</h1>
+        <p id="hacker-text" style="color: var(--hacker-green); font-family: 'Courier Prime';"></p>
         <div class="btn-container" id="btns-1" style="visibility: hidden;">
-            <button class="btn btn-hacker" onclick="nextStage(2)">GRANT ACCESS (YES)</button>
-            <button class="btn btn-hacker btn-no-loop" id="no-1">DENY (NO)</button>
+            <button class="btn btn-hacker" onclick="startExperience()">GRANT ACCESS (YES)</button>
+            <button class="btn btn-hacker btn-no-loop">DENY</button>
         </div>
     </div>
 
     <div id="stage-2" class="stage" style="background: white;">
-        <h1 class="heading-love animate__animated animate__jackInTheBox">HAPPY BIRTHDAY HAROOOOO 🎂</h1>
-        <h2 class="animate__animated animate__heartBeat animate__infinite" style="color: #ff4d6d;">I love you so muchhhhh 💕</h2>
-        <button class="btn btn-main" onclick="nextStage(3)">Continue Story</button>
+        <h1 class="heading-love animate__animated animate__heartBeat animate__infinite">HAPPY BIRTHDAY HAROOOOO 🎂</h1>
+        <button class="btn btn-main" onclick="nextStage(3)">See My Confession</button>
     </div>
 
     <div id="stage-3" class="stage romantic-bg">
-        <h2 style="font-size: 2rem;">Do you want to spend your life with me?</h2>
+        <h2>Do you want to spend the rest of your life with me?</h2>
         <div class="btn-container">
-            <button class="btn btn-main" onclick="showRegretMsg()">YES</button>
-            <button class="btn btn-main btn-no-loop" id="no-2">NO</button>
+            <button class="btn btn-main" onclick="showRegretMsg()">YES, ALWAYS</button>
+            <button class="btn btn-main btn-no-loop">NO</button>
         </div>
-        <div id="regret-msg" style="display: none; margin-top: 20px;" class="animate__animated animate__fadeInUp">
-            <p>No regret at all right? agr regret dil mai aaa bhi rha hai na punch marungi ay bry Sooo 10 years together... <b>ALLAH HUMMA BARIK ❤️</b></p>
-            <button class="btn btn-main" onclick="nextStage(4)">Our Story</button>
+        <div id="regret-msg" style="display: none; margin-top: 20px;">
+            <p>10 years and counting... <b>ALLAH HUMMA BARIK ❤️</b></p>
+            <button class="btn btn-main" onclick="nextStage(4)">Open Our Memories ✨</button>
         </div>
     </div>
 
-    <div id="stage-4" class="stage romantic-bg" style="display:none; justify-content: flex-start;">
-        <h1 class="heading-love">✨ Our Sweet Memories ✨</h1>
-        <div class="memory-storyboard">
-            <div class="mem-col">
-                <div class="memory-item">First time we met, I asked you for your phone, and you refused saying “I don’t like it,” then you took your phone back from my hand 😅 and my mood got spoiled… ohh the word “spoil” just reminded me — I always end up spoiling your mood 😌❤️</div>
-                <div class="memory-item">On our second meetup, we held hands for the very first time 🤝</div>
-                <div class="memory-item">On our movie date, we ended up watching each other more than the movie 🎬and it was also our first kiss ❤️</div>
-                <div class="memory-item">During tuition days 📚,there were many more cute little moments too ❤️</div>
-            </div>
-            <div class="mem-col">
-                <div class="memory-item">After every fight, we always came back to each other-Allah Humma Barik 🤍</div>
-                <div class="memory-item">The engagement prank 💍 made me cry a lot, and honestly I still haven’t fully forgiven you for that 😅😂</div>
-                <div class="memory-item">We both got admission in the same university🎓❤️</div>
-                <div class="memory-item">Even during degree and job phase, we never left each other’s side 💼</div>
-                <div class="memory-item">Still together, Alhamdulillah 🤍</div>
-            </div>
-            <div class="mem-col">
-                <div class="memory-item">Sometimes anger, sometimes love — but in the end, I always end up thinking about you 😔</div>
-                <div class="memory-item">After every argument, my heart still comes back to you ay bary paddu❤️</div>
-                <div class="memory-item">I admit my mistakes… but you also need to accept yours 😌 larty ap hi ho mai masoom hoon 😅 jao maff kara kiya yd rakhogy </div>
-                <div class="memory-item">I can’t say the last line properly because I’m scared you might change… so this is just our short 10-year love story, and I want it to stay like this forever 🤍</div>
-            </div>
+    <div id="stage-4" class="stage romantic-bg" style="display:none; justify-content: flex-start; padding-top: 30px;">
+        <h1 class="heading-love">📜 Our Journey</h1>
+        
+        <div id="mem-part-1" class="memory-part active-part">
+            <div class="memory-item">First time we met, I asked you for your phone, and you refused saying “I don’t like it,” then you took your phone back from my hand 😅 and my mood got spoiled… ohh the word “spoil” just reminded me — I always end up spoiling your mood 😌❤️</div>
+            <div class="memory-item">On our second meetup, we held hands for the very first time 🤝</div>
+            <div class="memory-item">On our movie date, we ended up watching each other more than the movie 🎬and it was also our first kiss ❤️</div>
+            <div class="memory-item">During tuition days 📚,there were many more cute little moments too ❤️</div>
+            <div class="btn-container"><button class="btn btn-main" onclick="showMemPart(2)">Read More...</button></div>
         </div>
-        <button class="btn btn-main" onclick="nextStage(5)" style="margin: 30px 0;">Wait, I have a message... 💌</button>
+
+        <div id="mem-part-2" class="memory-part">
+            <div class="memory-item">After every fight, we always came back to each other-Allah Humma Barik 🤍</div>
+            <div class="memory-item">The engagement prank 💍 made me cry a lot, and honestly I still haven’t fully forgiven you for that 😅😂</div>
+            <div class="memory-item">We both got admission in the same university🎓❤️</div>
+            <div class="memory-item">Even during degree and job phase, we never left each other’s side 💼</div>
+            <div class="btn-container"><button class="btn btn-main" onclick="showMemPart(3)">Keep Reading...</button></div>
+        </div>
+
+        <div id="mem-part-3" class="memory-part">
+            <div class="memory-item">Sometimes anger, sometimes love — but in the end, I always end up thinking about you 😔</div>
+            <div class="memory-item">After every argument, my heart still comes back to you ay bary paddu❤️</div>
+            <div class="memory-item">I admit my mistakes… but you also need to accept yours 😌 larty ap hi ho mai masoom hoon 😅 jao maff kara kiya yd rakhogy </div>
+            <div class="memory-item">I can’t say the last line properly because I’m scared you might change… so this is just our short 10-year love story, and I want it to stay like this forever 🤍</div>
+            <div class="memory-item">Still together, Alhamdulillah 🤍</div>
+            <div class="btn-container"><button class="btn btn-main" onclick="nextStage(5)">Wait, I have a message... 💌</button></div>
+        </div>
     </div>
 
     <div id="stage-5" class="stage romantic-bg">
-        <h1 class="heading-love animate__animated animate__pulse animate__infinite">I AM SORRY 🥺</h1>
-        <div class="sorry-box animate__animated animate__fadeIn">
-            <p style="font-size: 1.1rem; line-height: 1.6; text-align: left;">
-                Mai janti hoon mujh sy boht se galtiyan hoe hai thore se gussy wali hoon shyd mai apky laik bhi nhi ... but
-                Mai boht koshsih kr rhi hoon apny apko apky laik bannay ki thora ap bhi mera sth du ap khud larkiyon wali harkatain krty ho. 
-                <br><br>
-                And ap bhi lrty ho gussa krty ho achy sy bt bhi nhi krty mujh sy... zadaaaa bola na agr or gusssa kara mujh per 
-                toh sb kuch chor kr chale jaungi dhooondty rehna! Aur ap ka nam letter mai likh kr jaungi 
-                ke "is shaks ki wajah sy gae" phir ap phas jaogy 😂😂😂 KHYR
-                <br><br>
-                <b>I am sorrry for everything!</b> <br>
-                Ab jaldi se ap bhi sorry bolo aur phir mujhy bhi moka mily apko maaaff krny ka HEHEHE!
-            </p>
+        <h1 class="heading-love">I AM SORRY 🥺</h1>
+        <div class="sorry-box">
+            Mai janti hoon mujh sy boht se galtiyan hoe hai shyd mai apky laik apny apko mai nhi samjhti... Mai boht koshsih kr rhi hoon apny apko apky laik bannay ki thora ap bhi mera sth du and ap bhi lrty ho gussa krty ho achy sy bt bhi nhi krty mujh sy zadaaaa bola na agr or gusssa kara mujh per sb kuch chor kr chale jaungi dhooondty rehna or ap ka nam letter mai likh kr jaungi is shaks ki wajah sy gae phir ap phas jaogy 😂😂😂 <br><br> <b>I am sorrry for everything!</b>
         </div>
         <div class="btn-container">
-            <button class="btn btn-main" onclick="nextStage(6)">I FORGIVE YOU & SORRY OR KABHI TANG NHI KRUNGA❤️</button>
-            <button class="btn btn-main btn-no-loop" id="no-sorry">NO, NEVER</button>
+            <button class="btn btn-main" onclick="nextStage(6)">I FORGIVE YOU & SORRY ❤️</button>
+            <button class="btn btn-main btn-no-loop">NO</button>
         </div>
     </div>
 
     <div id="stage-6" class="stage romantic-bg">
-        <h1 class="heading-love">Will you marry me in 2026?  💍</h1>
+        <h1 class="heading-love">Will you marry me in 2026? 💍</h1>
         <div class="btn-container">
-            <button class="btn btn-main" onclick="finalCelebrate()">YES! or agr jhoota wala yes bola naa daikhlena beta phir  ❤️</button>
-            <button class="btn btn-main btn-no-loop" id="no-final">NO ❌</button>
+            <button class="btn btn-main" onclick="finalCelebrate()">YES! ❤️</button>
+            <button class="btn btn-main btn-no-loop">NO</button>
         </div>
-        <div id="final-msg" style="display: none; margin-top: 30px;">
-            <h1 class="animate__animated animate__heartBeat animate__infinite" style="color: var(--romantic-pink); font-size: 3rem;">I LOVEEEE YOUUUU 💕</h1>
-            <p>ONCE AGAIN HAPPY BIRTHDAY HAROOOO 🎉</p>
+        <div id="final-msg" style="display: none; margin-top: 20px;">
+            <h1 class="animate__animated animate__heartBeat animate__infinite" style="color: var(--romantic-pink);">I LOVE YOU FOREVER 💕</h1>
             <button class="btn btn-main" onclick="location.reload()">Replay 🔁</button>
         </div>
     </div>
 
     <script>
-        // Matrix & Typing scripts same as before...
+        // Matrix Effect
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        const characters = "010101HACKEDERROR666SYSTEMOVERRIDE";
-        const fontSize = 16;
-        const columns = canvas.width / fontSize;
-        const drops = Array(Math.floor(columns)).fill(1);
-
+        const drops = Array(Math.floor(canvas.width/16)).fill(1);
         function drawMatrix() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#0f0';
-            ctx.font = fontSize + 'px monospace';
-            for (let i = 0; i < drops.length; i++) {
-                const text = characters.charAt(Math.floor(Math.random() * characters.length));
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#0f0'; ctx.font = '16px monospace';
+            drops.forEach((y, i) => {
+                ctx.fillText("01", i * 16, y * 16);
+                if (y * 16 > canvas.height && Math.random() > 0.975) drops[i] = 0;
                 drops[i]++;
-            }
+            });
         }
-        setInterval(drawMatrix, 33);
+        setInterval(drawMatrix, 50);
 
-        const hackerLines = ["> Initializing Emotional_Exploit.exe...", "> Bypassing Security Firewall...", "> Accessing Heart Data...", "> Click YES to prevent system crash 😏"];
-        let lineIdx = 0;
-        function typeHacker() {
-            if (lineIdx < hackerLines.length) {
-                document.getElementById('hacker-text').innerHTML = hackerLines[lineIdx];
-                lineIdx++;
-                setTimeout(typeHacker, 1800);
-            } else {
-                document.getElementById('btns-1').style.visibility = 'visible';
-            }
+        // Typing Effect
+        let line = 0;
+        const lines = ["> Initializing Virus Scan...", "> 10 Years of Cache Detected...", "> Unlocking Memories...", "> Press YES to continue..."];
+        function type() {
+            if(line < lines.length) {
+                document.getElementById('hacker-text').innerText = lines[line++];
+                setTimeout(type, 1200);
+            } else { document.getElementById('btns-1').style.visibility = 'visible'; }
+        }
+
+        // START BUTTON (FIXES MUSIC)
+        function startExperience() {
+            const bdayMusic = document.getElementById('music-bday');
+            bdayMusic.play().catch(e => console.log("Audio play failed"));
+            nextStage(2);
         }
 
         function nextStage(num) {
             document.querySelectorAll('.stage').forEach(s => s.classList.remove('active'));
             document.getElementById(`stage-${num}`).classList.add('active');
-            if(num === 2) { document.getElementById('matrix-canvas').style.display = 'none'; confetti({ particleCount: 200 }); document.getElementById('music-bday').play(); }
-            if(num === 4) { 
-                document.getElementById('music-bday').pause(); document.getElementById('music-romantic').play();
-                const items = document.querySelectorAll('.memory-item');
-                items.forEach((item, index) => { setTimeout(() => item.classList.add('show'), index * 300); });
+            
+            if(num === 2) { 
+                document.getElementById('matrix-canvas').style.display = 'none'; 
+                confetti({particleCount: 150}); 
+            }
+            if(num === 4) {
+                document.getElementById('music-bday').pause();
+                document.getElementById('music-romantic').play();
             }
         }
 
+        function showMemPart(part) {
+            document.querySelectorAll('.memory-part').forEach(p => p.classList.remove('active-part'));
+            document.getElementById(`mem-part-${part}`).classList.add('active-part');
+        }
+
         function showRegretMsg() { document.getElementById('regret-msg').style.display = 'block'; }
-        function finalCelebrate() { document.getElementById('final-msg').style.display = 'block'; confetti({ particleCount: 500, spread: 150 }); }
-        window.onload = typeHacker;
+        function finalCelebrate() { 
+            document.getElementById('final-msg').style.display = 'block'; 
+            confetti({particleCount: 300, spread: 100}); 
+        }
+
+        window.onload = type;
     </script>
 </body>
 </html>
