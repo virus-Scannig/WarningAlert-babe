@@ -17,82 +17,61 @@
         }
 
         body, html {
-            margin: 0; padding: 0;
-            width: 100%; height: 100%;
-            font-family: 'Poppins', sans-serif;
-            background: #000;
-            overflow: hidden;
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            font-family: 'Poppins', sans-serif; background: #000; overflow: hidden;
         }
 
-        #matrix-canvas {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 0; opacity: 0.4;
-        }
+        #matrix-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.4; }
 
         .stage {
-            display: none; width: 100%; height: 100dvh;
-            position: fixed; top: 0; left: 0;
-            justify-content: center; align-items: center;
-            flex-direction: column; text-align: center;
-            padding: 15px; box-sizing: border-box; z-index: 2;
+            display: none; width: 100%; height: 100dvh; position: fixed; top: 0; left: 0;
+            justify-content: center; align-items: center; flex-direction: column;
+            text-align: center; padding: 15px; box-sizing: border-box; z-index: 2;
         }
 
         .active { display: flex !important; animation: fadeIn 0.8s; }
 
         .btn-container { 
-            position: relative; margin-top: 15px; 
-            display: flex; gap: 15px; justify-content: center; 
-            align-items: center; width: 100%; min-height: 80px;
+            position: relative; margin-top: 20px; display: flex; gap: 15px; 
+            justify-content: center; align-items: center; width: 100%; min-height: 100px;
         }
         
         .btn {
-            padding: 10px 20px; border-radius: 50px; border: none;
-            cursor: pointer; font-weight: 600; font-family: 'Poppins';
-            font-size: 0.85rem; min-width: 100px; z-index: 10;
+            padding: 12px 25px; border-radius: 50px; border: none; cursor: pointer;
+            font-weight: 600; font-family: 'Poppins'; font-size: 0.9rem; min-width: 120px; z-index: 10;
         }
 
         .btn-main { background: var(--btn-grad); color: white; box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4); }
         .btn-hacker { background: transparent; border: 2px solid var(--hacker-green); color: var(--hacker-green); }
 
         .btn-no-loop { position: absolute; animation: moveLoop 3s linear infinite; }
-
         @keyframes moveLoop {
             0% { transform: translate(0, 0); }
-            25% { transform: translate(60px, -40px); }
-            50% { transform: translate(-60px, 40px); }
-            75% { transform: translate(60px, 40px); }
+            25% { transform: translate(80px, -60px); }
+            50% { transform: translate(-80px, 60px); }
+            75% { transform: translate(80px, 60px); }
             100% { transform: translate(0, 0); }
         }
 
-        .romantic-bg { 
-            background: linear-gradient(135deg, #fff5f7 0%, #fad0c4 100%); 
-            color: #444; overflow-y: auto !important;
-        }
+        .romantic-bg { background: linear-gradient(135deg, #fff5f7 0%, #fad0c4 100%); color: #444; overflow-y: auto !important; }
 
-        .mem-page { display: none; width: 100%; max-width: 450px; flex-direction: column; gap: 10px; }
+        .mem-page { display: none; width: 100%; max-width: 450px; flex-direction: column; gap: 12px; }
         .mem-page.active-mem { display: flex; animation: fadeInUp 0.5s; }
 
         .memory-item {
-            background: white; padding: 12px; border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            font-size: 0.8rem; border-left: 5px solid var(--romantic-pink);
-            text-align: left;
+            background: white; padding: 15px; border-radius: 18px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06); font-size: 0.85rem;
+            border-left: 5px solid var(--romantic-pink); text-align: left; line-height: 1.5;
         }
 
-        .heading-love { 
-            font-family: 'Dancing Script', cursive; font-size: 2.2rem; 
-            color: var(--romantic-pink); margin: 10px 0;
-        }
+        .heading-love { font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: var(--romantic-pink); margin: 15px 0; }
 
         .sorry-box {
-            background: white; padding: 15px;
-            border-radius: 20px; width: 90%; max-width: 400px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            background: white; padding: 20px; border-radius: 20px; 
+            width: 90%; max-width: 500px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1); 
             border: 2px dashed var(--romantic-pink);
-            max-height: 55vh; overflow-y: auto;
         }
-
-        /* BALLOON CSS FIXED */
         .balloon {
             position: absolute; bottom: -100px; width: 40px; height: 55px;
             border-radius: 50%; opacity: 0.7; z-index: 1;
@@ -105,93 +84,93 @@
     </style>
 </head>
 <body>
-
-    <canvas id="matrix-canvas"></canvas>
+     <canvas id="matrix-canvas"></canvas>
     <div id="balloon-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1;"></div>
 
+
+    <canvas id="matrix-canvas"></canvas>
     <audio id="music-bday" loop src="https://www.soundjay.com/misc/sounds/birthday-song-1.mp3"></audio>
     <audio id="music-romantic" loop src="https://www.soundjay.com/nature/sounds/rain-01.mp3"></audio>
 
     <div id="stage-1" class="stage active">
-        <h1 class="animate__animated animate__flash animate__infinite" style="color: var(--hacker-red); font-size: 2.2rem;">⚠️ THREAT DETECTED</h1>
-        <p id="hacker-text" style="color: var(--hacker-green); font-family: 'Courier Prime'; font-size: 1rem;"></p>
+        <h1 class="animate__animated animate__flash animate__infinite" style="color: var(--hacker-red); font-size: 2.5rem;">⚠️ THREAT DETECTED</h1>
+        <p id="hacker-text" style="color: var(--hacker-green); font-family: 'Courier Prime';"></p>
         <div class="btn-container" id="btns-1" style="visibility: hidden;">
-            <button class="btn btn-hacker" onclick="startExperience()">GRANT ACCESS (YES) 💋</button>
-            <button class="btn btn-hacker btn-no-loop" id="no-1">DENY (NO)</button>
+            <button class="btn btn-hacker" onclick="startExperience()">GRANT ACCESS (YES)</button>
+            <button class="btn btn-hacker btn-no-loop">DENY (NO)</button>
         </div>
     </div>
 
     <div id="stage-2" class="stage" style="background: white;">
-        <h1 class="heading-love animate__animated animate__jackInTheBox">HAPPY BIRTHDAY HAROOOOO 🎂🎂🎂🎂🎂</h1>
-        <h2 class="animate__animated animate__heartBeat animate__infinite" style="color: #ff4d6d; font-size: 1.2rem;">I love you so muchhhhh 💕💕💕💕💋💋</h2>
-        <button class="btn btn-main" onclick="nextStage(3)">Continue Story</button>
+        <h1 class="heading-love animate__animated animate__jackInTheBox">HAPPY BIRTHDAY TO YOU🎂....HAPPY BIRTHDAY TO YOU🎂....
+            HAPPY BIRTHDAY DEAR HARO🎂...HAPPY BIRTHDAY TO YOUUUUUUUUUUUUU.. 🎂🎂🎂🎂</h1>
+        <h2 style="color: #ff4d6d;">I loveeeeeeeeeeeeeeeeeeuuuuuuuuu shoooooooooooo muchhhhh 💕💕💕</h2>
+        <button class="btn btn-main" onclick="nextStage(3)">JAWB DUU OR NEXT PER AJAOOO</button>
     </div>
 
     <div id="stage-3" class="stage romantic-bg">
-        <h2 style="font-size: 1.5rem;">Do you want to spend your life with me? 💋</h2>
+        <h2 style="font-size: 1.8rem;">Do you want to spend your life with me?</h2>
         <div class="btn-container">
-            <button class="btn btn-main" onclick="showRegretMsg()">YES</button>
-            <button class="btn btn-main btn-no-loop" id="no-2">NO</button>
+            <button class="btn btn-main" onclick="showRegretMsg()">YES💕</button>
+            <button class="btn btn-main btn-no-loop">NO</button>
         </div>
-        <div id="regret-msg" style="display: none; margin-top: 15px;" class="animate__animated animate__fadeInUp">
-            <p style="font-size: 0.9rem;">No regret at all right? agr regret dil mai aaa bhi rha hai na punch marungi ay bry Sooo 10 years together... <b>ALLAH HUMMA BARIK ❤️💋</b></p>
-            <button class="btn btn-main" onclick="nextStage(4)">Our Story</button>
+        <div id="regret-msg" style="display: none; margin-top: 20px;" class="animate__animated animate__fadeInUp">
+            <p>No regret at all right? agr regret dil mai aaa bhi rha hai na punch marungi ay bry paddu 10 years together... <b>ALLAH HUMMA BARIK ❤️</b></p>
+            <button class="btn btn-main" onclick="nextStage(4)">chalo betaaa next per ajaaaoo</button>
         </div>
     </div>
 
-    <div id="stage-4" class="stage romantic-bg" style="display:none; justify-content: flex-start; padding-top: 10px;">
-        <h1 class="heading-love">Between Us 💋</h1>
-        <p style="margin-top:-10px; font-style:italic; color:var(--romantic-pink);">A 10-Year Journey...</p>
+    <div id="stage-4" class="stage romantic-bg" style="display:none; justify-content: flex-start; padding-top: 20px;">
+        <h1 class="heading-love">✨ Between us✨</h1>
         
         <div id="mem-p1" class="mem-page active-mem">
             <div class="memory-item">First time we met, I asked you for your phone, and you refused saying “I don’t like it,” then you took your phone back from my hand 😅 and my mood got spoiled… ohh the word “spoil” just reminded me — I always end up spoiling your mood 😌❤️</div>
             <div class="memory-item">On our second meetup, we held hands for the very first time 🤝</div>
-            <div class="memory-item">On our movie date, we ended up watching each other more than the movie 🎬and it was also our first kiss 💋❤️</div>
-            <div class="btn-container"><button class="btn btn-main" onclick="changeMemPage(2)">Next Page</button></div>
+            <div class="memory-item">On our movie date, we ended up watching each other more than the movie 🎬and it was also our first💏😘❤️</div>
+            <div class="btn-container"><button class="btn btn-main" onclick="changeMemPage(2)">zada blush nhi kro agy chalo</button></div>
         </div>
+
         <div id="mem-p2" class="mem-page">
             <div class="memory-item">After every fight, we always came back to each other-Allah Humma Barik 🤍</div>
             <div class="memory-item">The engagement prank 💍 made me cry a lot, and honestly I still haven’t fully forgiven you for that 😅😂</div>
             <div class="memory-item">We both got admission in the same university🎓❤️</div>
             <div class="memory-item">Even during degree and job phase, we never left each other’s side 💼</div>
-            <div class="btn-container"><button class="btn btn-main" onclick="changeMemPage(3)">Next Page</button></div>
+            <div class="btn-container"><button class="btn btn-main" onclick="changeMemPage(3)">bsss bhaee jldi jldi prhoooo</button></div>
         </div>
+
         <div id="mem-p3" class="mem-page">
             <div class="memory-item">Sometimes anger, sometimes love — but in the end, I always end up thinking about you 😔</div>
             <div class="memory-item">After every argument, my heart still comes back to you ay bary paddu❤️</div>
             <div class="memory-item">I admit my mistakes… but you also need to accept yours 😌 larty ap hi ho mai masoom hoon 😅 jao maff kara kiya yd rakhogy </div>
-            <div class="btn-container"><button class="btn btn-main" onclick="changeMemPage(4)">Last Page</button></div>
-        </div>
-        <div id="mem-p4" class="mem-page">
             <div class="memory-item">I can’t say the last line properly because I’m scared you might change… so this is just our short 10-year love story, and I want it to stay like this forever 🤍</div>
             <div class="memory-item">Still together, Alhamdulillah 🤍</div>
-            <div class="btn-container"><button class="btn btn-main" onclick="nextStage(5)">Wait, I have a message... 💌💋</button></div>
+            <div class="btn-container"><button class="btn btn-main" onclick="nextStage(5)">Wait, I have a message... 💌</button></div>
         </div>
     </div>
 
     <div id="stage-5" class="stage romantic-bg" style="justify-content: flex-start; padding-top: 20px;">
-        <h1 class="heading-love">I AM SORRY 🥺💋</h1>
+        <h1 class="heading-love">I AM SORRY 🥺</h1>
         <div class="sorry-box">
-            <p style="font-size: 0.9rem; line-height: 1.4; text-align: left;">
-                Mai janti hoon mujh sy boht se galtiyan hoe hai thore se gussy wali hoon... But Mai boht koshsih kr rhi hoon apny apko apky laik bannay ki. <br><br>
-                Zadaaaa bola na agr or gusssa kara mujh per toh sb kuch chor kr chale jaungi dhooondty rehna! 😂<br><br>
-                <b>I am sorrry for everything! 💋</b>
+            <p style="font-size: 0.95rem; text-align: left;">
+                Mai janti hoon mujh sy boht se galtiyan hoe hai thore se gussy wali hoon shyd thoreee zdaa hogae hoon shyd mai apky laik bhi nhi ... but Mai boht koshsih kr rhi hoon apny apko apky laik bannay ki thora ap bhi mera sth du ap khud larkiyon wali harkatain krty ho. <br><br>
+                And ap bhi lrty ho gussa krty ho achy sy bt bhi nhi krty mujh sy... zadaaaa bola na agr or gusssa kara mujh per toh sb kuch chor kr chale jaungi dhooondty rehna! Aur ap ka nam letter mai likh kr jaungi ke "is shaks ki wajah sy gae" phir ap phas jaogy 😂<br><br>
+                <b>I am sorrry har us chez ky leay jiski wajh sy ap hurt hoy !</b>
             </p>
         </div>
         <div class="btn-container">
-            <button class="btn btn-main" onclick="nextStage(6)">I FORGIVE YOU & SORRY OR KABHI TANG NHI KRUNGA❤️💋</button>
-            <button class="btn btn-main btn-no-loop" id="no-sorry">NO, NEVER</button>
+            <button class="btn btn-main" onclick="nextStage(6)">I FORGIVE YOU & loveeeeuuu toooo❤️</button>
+            <button class="btn btn-main btn-no-loop">NO</button>
         </div>
     </div>
 
     <div id="stage-6" class="stage romantic-bg">
         <h1 class="heading-love">Will you marry me in 2026? 💍</h1>
         <div class="btn-container">
-            <button class="btn btn-main" onclick="finalCelebrate()">YES! ❤️💋</button>
-            <button class="btn btn-main btn-no-loop" id="no-final">NO ❌</button>
+            <button class="btn btn-main" onclick="finalCelebrate()">YES! mana krky dekhaoo btaungi phir mai ❤️</button>
+            <button class="btn btn-main btn-no-loop">NO</button>
         </div>
-        <div id="final-msg" style="display: none; margin-top: 15px;">
-            <h1 class="heading-love" style="font-size: 2rem;">I LOVEEEE YOUUUU 💕💋</h1>
+        <div id="final-msg" style="display: none; margin-top: 20px;">
+            <h1 class="heading-love" style="font-size: 2.2rem;">I LOVEEEE YOUUUU JANNNNNNNNNNNNN💕</h1>
             <button class="btn btn-main" onclick="location.reload()">Replay 🔁</button>
         </div>
     </div>
@@ -200,29 +179,28 @@
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        const characters = "01";
         const drops = Array(Math.floor(canvas.width / 16)).fill(1);
         function drawMatrix() {
             ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = '#0f0'; ctx.font = '16px monospace';
             drops.forEach((y, i) => {
-                const char = Math.random() > 0.5 ? "0" : "1";
-                ctx.fillText(char, i * 16, y * 16);
+                ctx.fillText(characters.charAt(Math.floor(Math.random() * 2)), i * 16, y * 16);
                 if (y * 16 > canvas.height && Math.random() > 0.975) drops[i] = 0;
                 drops[i]++;
             });
         }
         setInterval(drawMatrix, 40);
 
-        const lines = ["> Bypassing Firewall...", "> Accessing Memories...", "> Press YES..."];
+        const lines = ["> Mission Started: Impress You.....","> Firewall Disabled by Your Eyes...", "> Connecting to Your Heart...","> Malware Detected: Your Cuteness...",">Hack Complete: You’re Mine Now 😭","> BABE Click YES ..."];
         let lIdx = 0;
         function typeH() {
             if (lIdx < lines.length) {
                 document.getElementById('hacker-text').innerHTML = lines[lIdx++];
-                setTimeout(typeH, 1500);
+                setTimeout(typeH, 2000);
             } else document.getElementById('btns-1').style.visibility = 'visible';
         }
-
-        // BALLOON LOGIC
+           // BALLOON LOGIC
         function createBalloons() {
             const container = document.getElementById('balloon-container');
             const colors = ['#ff4d6d', '#ffb3c1', '#fb6f92', '#ffffff', '#ffd1dc'];
@@ -260,3 +238,4 @@
     </script>
 </body>
 </html>
+
