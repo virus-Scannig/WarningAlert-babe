@@ -70,11 +70,27 @@
             background: white; padding: 20px; border-radius: 20px; width: 90%; max-width: 500px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.1); border: 2px dashed var(--romantic-pink);
         }
+
+        /* --- BALLOON CSS ADDED --- */
+        .balloon {
+            position: absolute; bottom: -150px; width: 50px; height: 70px;
+            border-radius: 50%; z-index: 1; opacity: 0.8;
+            animation: floatBalloons 8s ease-in infinite;
+        }
+        .balloon::after {
+            content: "🎈"; position: absolute; bottom: -20px; left: 10px; font-size: 20px; opacity: 0.5;
+        }
+        @keyframes floatBalloons {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-130dvh) rotate(20deg); opacity: 0; }
+        }
     </style>
 </head>
 <body>
 
     <canvas id="matrix-canvas"></canvas>
+    <div id="balloon-container" style="position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:1;"></div>
+
     <audio id="music-bday" loop src="https://www.soundjay.com/misc/sounds/birthday-song-1.mp3"></audio>
     <audio id="music-romantic" loop src="https://www.soundjay.com/nature/sounds/rain-01.mp3"></audio>
 
@@ -186,8 +202,25 @@
             } else document.getElementById('btns-1').style.visibility = 'visible';
         }
 
+        /* --- BALLOON LOGIC ADDED --- */
+        function startBalloons() {
+            const container = document.getElementById('balloon-container');
+            const colors = ['#ff4d6d', '#ffb3c1', '#fb6f92', '#ffffff', '#ffd1dc'];
+            setInterval(() => {
+                const b = document.createElement('div');
+                b.className = 'balloon';
+                b.style.left = Math.random() * 100 + 'vw';
+                b.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                b.style.width = (Math.random() * 30 + 30) + 'px';
+                b.style.height = (parseFloat(b.style.width) * 1.3) + 'px';
+                container.appendChild(b);
+                setTimeout(() => b.remove(), 8000);
+            }, 500);
+        }
+
         function startExperience() {
             document.getElementById('music-bday').play().catch(e => console.log("Play blocked"));
+            startBalloons(); // Balloons start here
             nextStage(2);
         }
 
@@ -203,8 +236,15 @@
             document.getElementById(`mem-p${p}`).classList.add('active-mem');
         }
 
-        function showRegretMsg() { document.getElementById('regret-msg').style.display = 'block'; }
-        function finalCelebrate() { document.getElementById('final-msg').style.display = 'block'; confetti({particleCount: 200}); }
+        function showRegretMsg() { 
+            document.getElementById('regret-msg').style.display = 'block'; 
+            confetti({particleCount: 100, spread: 70, origin: { y: 0.6 }}); // Small celebration for YES
+        }
+
+        function finalCelebrate() { 
+            document.getElementById('final-msg').style.display = 'block'; 
+            confetti({particleCount: 400, spread: 100, origin: { y: 0.5 }}); // Big celebration
+        }
         window.onload = typeH;
     </script>
 </body>
